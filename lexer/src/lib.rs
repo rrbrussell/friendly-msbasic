@@ -1,6 +1,8 @@
 pub mod relational_operators;
 pub mod errors;
 
+mod reserved_words;
+
 pub enum LexedItems {
 	WhiteSpace(String),
 	StringConstant(String),
