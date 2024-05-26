@@ -2,6 +2,12 @@ pub mod relational_operators;
 pub mod errors;
 
 mod reserved_words;
+mod basic_tokenizer;
+
+mod parser;
+mod position;
+
+
 
 pub enum LexedItems {
 	WhiteSpace(String),
@@ -13,7 +19,7 @@ pub enum LexedItems {
 	FloatingPointConstant(f32),
 	HexadecimalConstant(i16),
 	OctalConstant(i16),
-	Operator()
+	Operator(Operators),
 }
 
 pub enum Operators {

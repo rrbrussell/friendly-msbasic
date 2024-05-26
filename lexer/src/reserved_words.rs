@@ -1,6 +1,6 @@
 /// All the reserved words in Microsoft Basic.
 
-const RESERVED_WORDS: [&'static str; 204] = [
+const RESERVED_WORDS: [&'static str; 200] = [
 	"ABS",
 	"ALL",
 	"AS",
@@ -40,7 +40,6 @@ const RESERVED_WORDS: [&'static str; 204] = [
 	"DEFINT",
 	"DEFSNG",
 	"DEFSTR",
-	"DELETE",
 	"DELETE",
 	"DIM",
 	"DRAW",
@@ -153,7 +152,6 @@ const RESERVED_WORDS: [&'static str; 204] = [
 	"RESUME",
 	"RESUME NEXT",
 	"RETURN",
-	"RETURN",
 	"RIGHT$",
 	"RMDIR",
 	"RND",
@@ -189,8 +187,6 @@ const RESERVED_WORDS: [&'static str; 204] = [
 	"TROFF",
 	"TRON",
 	"UNLOCK",
-	"UNLOCK",
-	"UNLOCK",
 	"USR",
 	"VAL",
 	"VARPTR",
@@ -206,3 +202,12 @@ const RESERVED_WORDS: [&'static str; 204] = [
 	"WINDOW SCREEN",
 	"WRITE",
 ];
+
+pub fn is_a_reserved_word(word: &str) -> bool {
+	for index in 0..RESERVED_WORDS.len() {
+		if RESERVED_WORDS[index].starts_with(word) && RESERVED_WORDS[index].ends_with(word) {
+			return true;
+		}
+	}
+	return false;
+}

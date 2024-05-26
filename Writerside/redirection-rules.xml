@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules SYSTEM "https://resources.jetbrains.com/writerside/1.0/redirection-rules.dtd">
+<rules>
+    <!-- format is as follows
+    <rule id="<unique id>">
+        <accepts>page.html</accepts>
+    </rule>
+    -->
+    <rule id="587edc9b">
+        <description>Created after removal of "Start Here" from design_documentation</description>
+        <accepts>topics_start-here.html</accepts>
+    </rule>
+    <rule id="b4549e6">
+        <description>Created after removal of "Start Here" from design_documentation</description>
+        <accepts>topics_start-here.html</accepts>
+    </rule>
+    <rule id="f66840d">
+        <description>Created after removal of "Start Here" from design_documentation</description>
+        <accepts>start-here.html</accepts>
+    </rule>
+</rules>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="d"
+                 name="design_documentation"
+                 start-page="design_documentation_start-here.md">
+
+    <toc-element topic="Design-Documentation.topic">
+        <toc-element topic="bnf-specification-of-msbasic.md"/>
+    </toc-element>
+    <toc-element toc-title="design_documentation">
+        <toc-element topic="design_documentation_start-here.md"/>
+    </toc-element>
+</instance-profile>
