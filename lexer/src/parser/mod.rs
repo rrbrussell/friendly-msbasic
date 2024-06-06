@@ -1,6 +1,11 @@
+#[cfg(test)]
+mod test;
+
+use crate::LexedItems;
 use crate::position::Position;
 
 /// This is the parser for the GWBasic version of MSBasic.
+#[derive(Debug)]
 pub struct Parser<'a> {
 	/// Input is a slice of bytes. This might be just a single line or the
 	/// entire file depending on what is passed into the parser.
@@ -16,7 +21,7 @@ pub struct Parser<'a> {
 impl<'a> Parser<'a> {
 	/// Create a new parser. The parser keeps a readonly reference to the
 	/// backing bytes of the input string.
-	pub fn new(string: &'a String) -> Self {
+	pub fn new(string: &'a str) -> Self {
 		return Parser{
 			input: string.as_bytes(),
 			current_character: 0,
@@ -44,5 +49,18 @@ impl<'a> Parser<'a> {
 	/// of completely into memory at once.
 	pub fn used_input_buffer(&self) -> bool {
 		return self.used_input_buffer;
+	}
+
+	pub fn parse_end_of_line(&mut self) -> Option<LexedItems> {
+		let mut lexed_thing: Option<LexedItems> = None;
+		// Check if we have two free characters left in the buffer.
+		if (self.input.len() - self.current_character) >= 2 {
+			let item = &self.input[self.current_character..self.current_character + 2];
+			if item == [ 0x0d, 0x0a] {
+				lexed_thing = Some(LexedItems::EndOfLine);
+				self.current_character += 2;
+			}
+		}
+		return lexed_thing;
 	}
 }

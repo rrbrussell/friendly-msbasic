@@ -1,6 +1,6 @@
 use super::errors::SimpleError;
 
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub enum RelationalOperators {
 	Equality,
 	Inequality,

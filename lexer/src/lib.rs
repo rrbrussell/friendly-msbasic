@@ -9,6 +9,7 @@ mod position;
 
 
 
+#[derive(Debug,PartialEq)]
 pub enum LexedItems {
 	WhiteSpace(String),
 	StringConstant(String),
@@ -20,14 +21,17 @@ pub enum LexedItems {
 	HexadecimalConstant(i16),
 	OctalConstant(i16),
 	Operator(Operators),
+	EndOfLine,
 }
 
+#[derive(Debug,PartialEq)]
 pub enum Operators {
 	Arithmetic(ArithmeticOperators),
 	Relational(relational_operators::RelationalOperators),
 	Logical(LogicalOperators),
 }
 
+#[derive(Debug,PartialEq)]
 pub enum ArithmeticOperators {
 	Exponentiation,
 	Negation,
@@ -39,8 +43,7 @@ pub enum ArithmeticOperators {
 	Modulus,
 }
 
-
-
+#[derive(Debug,PartialEq)]
 pub enum LogicalOperators {
 	And,
 	Or,
@@ -50,6 +53,7 @@ pub enum LogicalOperators {
 	Implies,
 }
 
+#[derive(Debug,PartialEq)]
 pub struct LocationAndData {
 	pub line_number: usize,
 	pub column_number: usize,
