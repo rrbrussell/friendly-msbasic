@@ -4,6 +4,11 @@ mod test;
 use crate::LexedItems;
 use crate::position::Position;
 
+/// The ASCII space character.
+pub const SPACE_CHARACTER: u8 = 0x20;
+/// The ASCII horizontal tab or plain tab character.
+pub const TAB_CHARACTER: u8 = 0x09;
+
 /// This is the parser for the GWBasic version of MSBasic.
 #[derive(Debug)]
 pub struct Parser<'a> {
@@ -51,6 +56,11 @@ impl<'a> Parser<'a> {
 		return self.used_input_buffer;
 	}
 
+	/// How many input bytes have we not consumed?
+	pub fn get_unparsed_byte_count(&self) -> usize {
+		return self.input.len() - self.current_character;
+	}
+
 	pub fn parse_end_of_line(&mut self) -> Option<LexedItems> {
 		let mut lexed_thing: Option<LexedItems> = None;
 		// Check if we have two free characters left in the buffer.
@@ -59,6 +69,34 @@ impl<'a> Parser<'a> {
 			if item == [ 0x0d, 0x0a] {
 				lexed_thing = Some(LexedItems::EndOfLine);
 				self.current_character += 2;
+			}
+		}
+		self.used_input_buffer == true;
+		return lexed_thing;
+	}
+
+	/// Gets a run spaces and tabs.
+	pub fn parse_whitespace(&mut self) -> Option<LexedItems> {
+		let mut lexed_thing: Option<LexedItems> = None;
+		// Check if we have at least one free character left in the buffer.
+		if self.get_unparsed_byte_count() >= 1 {
+			let ws_start = self.current_character;
+
+			while self.input[self.current_character] == SPACE_CHARACTER ||
+				self.input[self.current_character] == TAB_CHARACTER {
+				self.current_character += 1;
+				if self.current_character >= self.input.len() {
+					self.used_input_buffer = true;
+					break;
+				}
+			}
+			let temp_vector =
+				Vec::from(&self.input[ws_start..self.current_character]);
+			// We manually checked the contents of these bytes. ASCII characters
+			// are valid utf8 by definition.
+			unsafe {
+				lexed_thing = Some(LexedItems::WhiteSpace(
+					String::from_utf8_unchecked(temp_vector)));
 			}
 		}
 		return lexed_thing;
