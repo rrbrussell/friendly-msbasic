@@ -1,4 +1,4 @@
-use std::iter::Peekable;
+/*
 /// The most basic tokenizer tool.
 
 use std::str::{CharIndices, Lines};
@@ -89,3 +89,4 @@ pub enum BasicToken {
 	Underscore,
 }
 
+*/

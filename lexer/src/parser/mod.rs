@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 #[cfg(test)]
 mod test;
 
@@ -5,9 +7,9 @@ use crate::LexedItems;
 use crate::position::Position;
 
 /// The ASCII space character.
-pub const SPACE_CHARACTER: u8 = 0x20;
+const SPACE_CHARACTER: u8 = 0x20;
 /// The ASCII horizontal tab or plain tab character.
-pub const TAB_CHARACTER: u8 = 0x09;
+const TAB_CHARACTER: u8 = 0x09;
 
 const DIGIT_ZERO: u8 = 0x30;
 const DIGIT_ONE: u8 = 0x31;
@@ -116,7 +118,7 @@ impl<'a> Parser<'a> {
 					break;
 				}
 			}
-			if self.current_character != ws_start {
+			if self.current_character != ws_start { // We found whitespace
 				self.position_for_humans.add_columns(self.current_character - ws_start);
 				let temp_vector =
 					Vec::from(&self.input[ws_start..self.current_character]);
@@ -147,17 +149,39 @@ impl<'a> Parser<'a> {
 		}
 	}
 
-	/// Gets an octal digit.
-	pub fn parse_octal_digit(&mut self) -> Option<u8> {
-		match self.input.get(self.current_character) {
-			None => return None,
-			Some(item) => return
-				if (*item >= DIGIT_ZERO) && (*item <= DIGIT_SEVEN) {
-					self.move_forward(1);
-					Some(*item - DIGIT_ZERO)
-				} else {
-					None
-				},
+	/// Gets a singular octal digit.
+	pub fn parse_octal_digit(&mut self) -> Option<char> {
+		return match self.input.get(self.current_character) {
+			None => None,
+			Some(item) => {
+					if (*item >= DIGIT_ZERO) && (*item <= DIGIT_SEVEN) {
+						self.move_forward(1);
+						Some(char::from(*item))
+					} else {
+						None
+					}
+			},
 		}
+	}
+
+	/// This chains one or more singular octal digits together into a larger
+	/// number.
+	pub fn parse_octal_digits(&mut self) -> Option<String> {
+		let mut parsed_item: Option<String> = None;
+		let mut digits: String = String::with_capacity(16);
+		let mut sub_results: Option<char> = self.parse_octal_digit();
+		while sub_results.is_some() {
+			match sub_results {
+				None => {},
+				Some(x) => {
+					digits.push(x);
+				}
+			}
+			sub_results = self.parse_octal_digit();
+		}
+		if !digits.is_empty() {
+			parsed_item = Some(digits);
+		}
+		return parsed_item;
 	}
 }

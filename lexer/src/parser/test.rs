@@ -25,3 +25,18 @@ fn test_parse_whitespace() {
 	assert!(test_result.is_none());
 	assert_eq!(position, Position::from_lines_and_columns(0, 2));
 }
+
+#[test]
+fn test_parse_octal_digit() {
+	let mut parser: Parser = Parser::new("012345678");
+	for x in 0..8u8 {
+		assert_eq!(parser.get_human_position().get_columns(), x as usize);
+		let test_result: Option<char> = parser.parse_octal_digit();
+		let x_char: char = char::from(x + DIGIT_ZERO);
+		assert_eq!(test_result, Some(x_char));
+		assert_eq!(parser.get_human_position().get_columns(), (x+1) as usize);
+	}
+	assert_eq!(parser.get_human_position().get_columns(), 8);
+	assert_eq!(parser.parse_octal_digit(), None);
+	assert_eq!(parser.get_human_position().get_columns(), 8);
+}

@@ -1,4 +1,4 @@
-use std::arch::x86_64::__cpuid_count;
+#![allow(dead_code)]
 
 #[cfg(test)]
 mod test;

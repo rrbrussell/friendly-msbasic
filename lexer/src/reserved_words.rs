@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 /// All the reserved words in Microsoft Basic.
 
 const RESERVED_WORDS: [&'static str; 200] = [
@@ -202,6 +204,7 @@ const RESERVED_WORDS: [&'static str; 200] = [
 	"WINDOW SCREEN",
 	"WRITE",
 ];
+
 
 pub fn is_a_reserved_word(word: &str) -> bool {
 	for index in 0..RESERVED_WORDS.len() {
