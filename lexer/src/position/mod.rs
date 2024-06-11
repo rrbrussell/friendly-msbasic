@@ -1,9 +1,11 @@
+use std::arch::x86_64::__cpuid_count;
+
 #[cfg(test)]
 mod test;
 
 /// This is used to track the lines and columns in a file.
 /// These line numbers are not the same as the Line Numbers inside a source file.
-#[derive(Debug)]
+#[derive(Copy,Clone,Debug)]
 pub struct Position {
 	line_number: usize,
 	column_number: usize,
@@ -14,6 +16,13 @@ impl Position {
 		return Position {
 			line_number: 0,
 			column_number: 0,
+		}
+	}
+
+	pub fn from_lines_and_columns(lines: usize, columns: usize) -> Self {
+		return Position {
+			line_number: lines,
+			column_number: columns,
 		}
 	}
 

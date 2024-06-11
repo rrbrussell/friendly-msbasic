@@ -22,6 +22,7 @@ pub enum LexedItems {
 	OctalConstant(i16),
 	Operator(Operators),
 	EndOfLine,
+	OptionalWhiteSpace(String),
 }
 
 #[derive(Debug,PartialEq)]
