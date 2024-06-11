@@ -40,3 +40,11 @@ fn test_parse_octal_digit() {
 	assert_eq!(parser.parse_octal_digit(), None);
 	assert_eq!(parser.get_human_position().get_columns(), 8);
 }
+
+#[test]
+fn test_parse_octal_digits() {
+	let mut parser: Parser = Parser::new("012345678");
+	assert_eq!(parser.parse_octal_digits(), Some(String::from("01234567")));
+	assert_eq!(parser.get_human_position().get_columns(), 8);
+	assert_eq!(parser.parse_octal_digits(), None);
+}
